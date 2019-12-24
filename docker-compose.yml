@@ -1,0 +1,26 @@
+version: "3.7"
+services:
+  trojan:
+    image: trojangfw/trojan
+    restart: always
+    container_name: ds-trojan
+    volumes:
+      - /etc/localtime:/etc/localtime
+      - ./trojan:/config
+      - ./caddy/certify:/root/.caddy
+    depends_on:
+      - caddy
+    ports:
+      - "443:443"
+  caddy:
+    image: abiosoft/caddy:php
+    restart: always
+    container_name: ds-caddy
+    working_dir: /var/www/html
+    volumes:
+      - /etc/localtime:/etc/localtime
+      - ./wwwroot:/var/www/html
+      - ./caddy/conf/Caddyfile:/etc/Caddyfile
+      - ./caddy/certify:/root/.caddy
+    ports:
+      - "80:80"

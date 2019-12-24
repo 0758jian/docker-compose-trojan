@@ -1,0 +1,7 @@
+./caddy/certify/*
+!./caddy/certify/.gitkeep
+./v2ray/log/*
+!./v2ray/log/.gitkeep
+./wwwroot/*
+!./wwwroot/.gitkeep
+.idea
