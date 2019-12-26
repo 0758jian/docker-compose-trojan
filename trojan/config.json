@@ -30,5 +30,13 @@
         "keep_alive": true,
         "fast_open": false,
         "fast_open_qlen": 20
+    },
+    "mysql": {
+        "enabled": true,
+        "server_addr": "mysqldb",
+        "server_port": 3306,
+        "database": "trojan",
+        "username": "trojan",
+        "password": "123456"
     }
 }

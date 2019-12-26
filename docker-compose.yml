@@ -25,13 +25,17 @@ services:
     ports:
       - "80:80"
   mysqldb:
-    image: daocloud.io/mysql:5.7.24
+    image: mysql:5.6.46
     restart: always
+    container_name: ds-mysql
     volumes:
       - /etc/localtime:/etc/localtime
       - ./mysql/data:/var/lib/mysql
       - ./mysql/my.cnf:/etc/mysql/mysql.conf.d/mysqld.cnf
     environment:
-      - MYSQL_ROOT_PASSWORD=${MYSQL_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
     ports:
       - ${MYSQL_PORT}:3306

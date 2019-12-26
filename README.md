@@ -28,10 +28,11 @@
 ```
 ### 注意事项
 - 主要是借助caddy自动拉取证书，然后给trojan来使用，顺便开启web server伪站
-- 已装上php 可以自行安装wordpress等php程序
 - 服务器只开通80 443 22(SSH建议改为其他端口登陆)
-- trojan 客户端下载 https://github.com/trojan-gfw/trojan/releases
-- pc 端会提示缺少vcruntime140_1.dll的话
+- 已装上php 可以自行安装wordpress等php程序
+- 因为没有数据库端口没暴露，所以可以装个phpmyadmin来管理数据
+- trojan PC客户端下载 https://github.com/trojan-gfw/trojan/releases
+- PC端会提示缺少vcruntime140_1.dll的话
 - 下载https://www.dll-files.com/vcruntime140_1.dll.html
 - win10复去c:\windows\system32
 
