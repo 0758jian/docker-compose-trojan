@@ -24,3 +24,14 @@ services:
       - ./caddy/certify:/root/.caddy
     ports:
       - "80:80"
+  mysqldb:
+    image: daocloud.io/mysql:5.7.24
+    restart: always
+    volumes:
+      - /etc/localtime:/etc/localtime
+      - ./mysql/data:/var/lib/mysql
+      - ./mysql/my.cnf:/etc/mysql/mysql.conf.d/mysqld.cnf
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_PASSWORD}
+    ports:
+      - ${MYSQL_PORT}:3306

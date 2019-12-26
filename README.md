@@ -21,6 +21,11 @@
     sudo docker-compose up -d
     sudo docker-compose logs trojan
 ```
+### 五、修改mysql 端口和密码
+```
+    cp .env.example .env
+    vi .env
+```
 ### 注意事项
 - 主要是借助caddy自动拉取证书，然后给trojan来使用，顺便开启web server伪站
 - 已装上php 可以自行安装wordpress等php程序

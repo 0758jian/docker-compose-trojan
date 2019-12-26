@@ -4,4 +4,6 @@
 !./v2ray/log/.gitkeep
 ./wwwroot/*
 !./wwwroot/.gitkeep
+./mysql/data/*
+!./mysql/data/.gitkeep
 .idea
