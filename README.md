@@ -31,6 +31,8 @@
 - 服务器只开通80 443 22(SSH建议改为其他端口登陆)
 - 已装上php 可以自行安装wordpress等php程序
 - 因为没有数据库端口没暴露，所以可以装个phpmyadmin来管理数据
+- sha224密码生成器 https://emn178.github.io/online-tools/sha224.html
+- 库表中的quota 负数就是不限流量，download + upload > quota 就断流
 - trojan PC客户端下载 https://github.com/trojan-gfw/trojan/releases
 - PC端会提示缺少vcruntime140_1.dll的话
 - 下载https://www.dll-files.com/vcruntime140_1.dll.html
