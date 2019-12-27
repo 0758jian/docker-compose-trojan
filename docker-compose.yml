@@ -24,8 +24,10 @@ services:
       - ./caddy/certify:/root/.caddy
     ports:
       - "80:80"
+      - "8443:8443"
   mysqldb:
-    image: mysql:5.6.46
+    #image: mysql:5.6.46
+    image: daocloud.io/mysql:5.7.24
     restart: always
     container_name: ds-mysql
     volumes:
