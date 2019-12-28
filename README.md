@@ -38,4 +38,4 @@
 - 下载https://www.dll-files.com/vcruntime140_1.dll.html
 - win10复去c:\windows\system32
 
-- TG技术群：https://t.me/joinchat/LqcgBEUJ7133BFBEv67NCw
+- TG技术群：https://t.me/ousiqi
