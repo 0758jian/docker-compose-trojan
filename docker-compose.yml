@@ -55,7 +55,7 @@ services:
     ports:
       - ${MYSQL_PORT}:3306
   redisdb:
-    image: daocloud.io/library/redis:4.0.10-alpine
+    image: redis:4.0.14-alpine
     restart: always
     container_name: ds-redis
     expose:
@@ -63,5 +63,5 @@ services:
     volumes:
       - /etc/localtime:/etc/localtime
       - ./redis/redis.conf:/etc/redis.conf
-      - ./redis/data:/var/lib/redis
+      - ./redis/data:/data
     command: redis-server /etc/redis.conf --appendonly yes
