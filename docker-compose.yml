@@ -34,7 +34,7 @@ services:
           - ./supervisor/supervisord.conf:/etc/supervisord.conf
           - ./supervisor/conf:/etc/supervisor.d
     depends_on:
-      - v2ray
+      - trojan
       - mysqldb
     ports:
       - "80:80"
