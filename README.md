@@ -37,5 +37,9 @@
 - PC端会提示缺少vcruntime140_1.dll的话
 - 下载https://www.dll-files.com/vcruntime140_1.dll.html
 - win10复去c:\windows\system32
+- 在caddy的dockerfiles文件里加入了crond、supervisord 容器启后手工执行下启动脚本吧（有时间再研究产生容器时自动运行）
+```
+    sudo docker-compose exec caddy sh /root/sr.sh
+```
 
-- TG技术群：https://t.me/joinchat/LqcgBEUJ7133BFBEv67NCw
+- TG技术群：https://t.me/ousiqi

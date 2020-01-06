@@ -13,15 +13,29 @@ services:
     ports:
       - "443:443"
   caddy:
-    image: abiosoft/caddy:php
+    build:
+      context: ./
+      dockerfile: caddyphp.dockerfile
     restart: always
     container_name: ds-caddy
     working_dir: /var/www/html
     volumes:
-      - /etc/localtime:/etc/localtime
-      - ./wwwroot:/var/www/html
-      - ./caddy/conf/Caddyfile:/etc/Caddyfile
-      - ./caddy/certify:/root/.caddy
+          - /etc/localtime:/etc/localtime
+          - ./wwwroot:/var/www/html
+          - ./caddy/conf/Caddyfile:/etc/Caddyfile
+          - ./caddy/log/caddy.log:/var/log/caddy.log
+          - ./caddy/certify:/root/.caddy
+          # php配置
+          - ./php/php.ini:/etc/php7/php.ini
+          - ./php/php-fpm.conf:/etc/php7/php-fpm.conf
+          # 计划任务
+          - ./crontab/crontab:/var/spool/cron/crontabs/root
+          # 队列
+          - ./supervisor/supervisord.conf:/etc/supervisord.conf
+          - ./supervisor/conf:/etc/supervisor.d
+    depends_on:
+      - v2ray
+      - mysqldb
     ports:
       - "80:80"
       - "8443:8443"
@@ -41,3 +55,14 @@ services:
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
     ports:
       - ${MYSQL_PORT}:3306
+  redisdb:
+    image: daocloud.io/library/redis:4.0.10-alpine
+    restart: always
+    container_name: ds-redis
+    expose:
+      - "6379"
+    volumes:
+      - /etc/localtime:/etc/localtime
+      - ./redis/redis.conf:/etc/redis.conf
+      - ./redis/data:/var/lib/redis
+    command: redis-server /etc/redis.conf --appendonly yes
