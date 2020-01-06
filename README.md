@@ -41,5 +41,9 @@
 ```
     sudo docker-compose exec caddy sh /root/sr.sh
 ```
+- redis的data目录要选给到权限
+```
+   sudo chown -R 1001:1001 redis/data/
+```
 
 - TG技术群：https://t.me/ousiqi
