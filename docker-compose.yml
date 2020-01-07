@@ -63,5 +63,5 @@ services:
     volumes:
       - /etc/localtime:/etc/localtime
       - ./redis/redis.conf:/etc/redis.conf
-      - ./redis/data:/data
+      #- ./redis/data:/data
     command: redis-server /etc/redis.conf --appendonly yes
