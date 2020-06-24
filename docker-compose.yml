@@ -4,6 +4,7 @@ services:
     image: trojangfw/trojan
     restart: always
     container_name: ds-trojan
+    network_mode: host
     volumes:
       - /etc/localtime:/etc/localtime
       - ./trojan:/config
@@ -17,11 +18,13 @@ services:
     restart: always
     container_name: ds-caddy
     working_dir: /var/www/html
+    network_mode: host
     volumes:
       - /etc/localtime:/etc/localtime
-      - ./wwwroot:/usr/share/caddy
+      - ./wwwroot:/var/www/html
       - ./caddy/conf/Caddyfile:/etc/Caddyfile
       - ./caddy/data:/data
+      - ./caddy/config:/config
     ports:
       - "80:80"
       - "8443:8443"
