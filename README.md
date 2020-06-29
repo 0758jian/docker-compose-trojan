@@ -11,9 +11,14 @@
     vi caddy/conf/Caddyfile
     sudo docker-compose up -d caddy
     sudo docker-compose logs -f caddy
+    #上传配置文件
+    curl localhost:2019/load -X POST -H "Content-Type: text/caddyfile" --data-binary @caddy/conf/Caddyfile
+    #重载容器里的配置文件
+    sudo docker-compose exec caddy caddy reload -config /etc/Caddyfile
 ```
+- 查看caddy2当前配置 curl localhost:2019/config/
 - 看到https://yourdomain 的出现就证书生成
-- 再次修改Caddyfile文件将域名指定80端口，让trojan转发过来
+- 再次修改Caddyfile文件将域名指定80端口，让trojan转发过来 注caddy2不需要了
 
 ### 四、修改trojan配置文件的证书路径和密码，里面的yourdomain是你的域名
 ```

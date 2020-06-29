@@ -1,5 +1,4 @@
 yourdomain {
-    root /var/www/html
-    fastcgi / 127.0.0.1:9000 php
-    on startup php-fpm7
+    root * /var/www/html
+    file_server
 }

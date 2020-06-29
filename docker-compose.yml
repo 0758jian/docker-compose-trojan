@@ -8,7 +8,7 @@ services:
     volumes:
       - /etc/localtime:/etc/localtime
       - ./trojan:/config
-      - ./caddy/certify:/root/.caddy
+      - ./caddy/data:/data
     depends_on:
       - caddy
     ports:
