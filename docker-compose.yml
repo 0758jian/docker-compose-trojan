@@ -22,7 +22,7 @@ services:
     volumes:
       - /etc/localtime:/etc/localtime
       - ./wwwroot:/var/www/html
-      - ./caddy/conf/Caddyfile:/etc/Caddyfile
+      - ./caddy/conf/Caddyfile:/etc/caddy/Caddyfile
       - ./caddy/data:/data
       - ./caddy/config:/config
     ports:
