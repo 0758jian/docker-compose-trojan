@@ -4,15 +4,23 @@ services:
     image: trojangfw/trojan
     restart: always
     container_name: ds-trojan
-    network_mode: host
+    #network_mode: host
     volumes:
       - /etc/localtime:/etc/localtime
       - ./trojan:/config
       - ./caddy/data:/data
-    depends_on:
-      - caddy
     ports:
       - "443:443"
+  speedtest:
+    image: adolfintel/speedtest
+    restart: always
+    container_name: ds-speedtest
+    environment:
+      - MODE=standalone
+    volumes:
+      - /etc/localtime:/etc/localtime
+    ports:
+      - "81:80"
   caddy:
     image: caddy
     restart: always

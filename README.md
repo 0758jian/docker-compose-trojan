@@ -21,8 +21,7 @@
     #重载容器里的配置文件
     sudo docker-compose exec caddy caddy reload -config /etc/Caddyfile
 ```
-- 看到https://yourdomain 的出现就证书生成
-- 再次修改Caddyfile文件将域名指定80端口，让trojan转发过来 注caddy2不需要了
+- 看到https://yourdomain 能该访问证书OK
 
 ### 四、注意！修改trojan配置文件的证书路径和密码，里面的yourdomain是你的域名
 ```

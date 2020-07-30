@@ -1,4 +1,3 @@
-yourdomain {
-    root * /var/www/html
-    file_server
+yourdomain:8443 {
+    respond "Hello, world!"
 }
