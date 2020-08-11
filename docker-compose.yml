@@ -1,16 +1,48 @@
 version: "3.7"
 services:
+  acme: 
+    image: neilpang/acme.sh
+    restart: always
+    container_name: ds-acme
+    command: daemon
+    environment:
+      - CF_Key="${CF_KEY}"
+      - CF_Email="${CF_EMAIL}"
+    volumes:
+      - /etc/localtime:/etc/localtime
+      - ./wwwroot:/var/www/html
+      - ./acme:/acme.sh
+  nginx:
+    image: nginx:stable-alpine
+    restart: always
+    container_name: ds-nginx
+    working_dir: /var/www/html
+    volumes:
+      - /etc/localtime:/etc/localtime
+      - ./wwwroot:/var/www/html
+      - ./nginx:/etc/nginx/conf.d
+      - ./acme:/acme
+    depends_on:
+      - php
+      - mysql
+    ports:
+      - "80:80"
+      - "443:443"
   trojan:
     image: trojangfw/trojan
     restart: always
     container_name: ds-trojan
-    #network_mode: host
     volumes:
       - /etc/localtime:/etc/localtime
       - ./trojan:/config
       - ./caddy/data:/data
+      - ./acme:/acme
     ports:
-      - "443:443"
+      - "${TROJAN_PORT}:${TROJAN_PORT}"
+    depends_on:
+      - mysql
+      - acme.sh
+      - nginx    
   speedtest:
     image: adolfintel/speedtest
     restart: always
@@ -20,19 +52,51 @@ services:
     volumes:
       - /etc/localtime:/etc/localtime
     ports:
-      - "81:80"
-  caddy:
-    image: caddy
+      - "${SPEEDTEST_PORT}:80"
+  app:
+    build:
+      context: ./
+      dockerfile: app.dockerfile
+    working_dir: /var/www/html    
     restart: always
-    container_name: ds-caddy
-    working_dir: /var/www/html
-    network_mode: host
+    container_name: ds-app
     volumes:
-      - /etc/localtime:/etc/localtime
       - ./wwwroot:/var/www/html
-      - ./caddy/conf/Caddyfile:/etc/caddy/Caddyfile
-      - ./caddy/data:/data
-      - ./caddy/config:/config
+      - ./php/www.conf:/usr/local/etc/php-fpm.d/www.conf
+      - ./php/php.ini:/usr/local/etc/php/php.ini
+      - ./crontab/crontab:/var/spool/cron/crontabs/root
+      - ./supervisor/supervisord.conf:/etc/supervisord.conf
+      - ./supervisor/conf:/etc/supervisor/conf.d
     ports:
-      - "80:80"
-      - "8443:8443"
+      - "${PHP_FASTCGI_PORT}:${PHP_FASTCGI_PORT}"
+  mysql:
+    image: daocloud.io/library/mysql:5.7.30
+    #network_mode: host
+    restart: always
+    container_name: ds-mysql
+    volumes:
+      - ./mysql/data:/var/lib/mysql
+      - ./mysql/conf/my.cnf:/etc/mysql/mysql.conf.d/mysqld.cnf
+    environment:
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+    ports:
+        - "${MYSQL_PORT}:${MYSQL_PORT}"
+  redis:
+    image: daocloud.io/library/redis:4.0.10-alpine
+    restart: always
+    container_name: ds-redis   
+    volumes:
+      - ./redis/redis.conf:/etc/redis.conf
+      - ./redis/data:/data
+    ports:
+      - "${REDIS_PORT}:${REDIS_PORT}"
+    command: redis-server /etc/redis.conf --appendonly yes     
+  memcached:
+    container_name: ds-memcached
+    image: memcached
+    restart: always
+    ports:
+      - "${MEMCACHED_PORT}:${MEMCACHED_PORT}"
