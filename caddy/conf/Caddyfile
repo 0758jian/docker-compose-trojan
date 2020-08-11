@@ -1,3 +1,0 @@
-yourdomain:8443 {
-    respond "Hello, world!"
-}

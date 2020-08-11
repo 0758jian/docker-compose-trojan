@@ -13,6 +13,13 @@
     sudo docker-compose up -d
     sudo docker-compose logs trojan
 ```
+
+### 四、先登陆cloudflare 开启global key 配置在env环境文件里，域名解析好 *.yourdomain.cc yourdomain.cc
+```
+    #获取一级域名和泛域名证书
+    sudo docker-compose exec acme --issue --dns dns_cf -d *.yourdomain.cc -d yourdomain.cc
+```
+
 ### 注意事项
 - acme拉取域名证书，顺便开启web server伪站
 - 已装上php 可以自行安装wordpress等php程序
