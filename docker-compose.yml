@@ -75,7 +75,7 @@ services:
       - MYSQL_PASSWORD=${MYSQL_PASSWORD}
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
     ports:
-        - "${MYSQL_PORT}:${MYSQL_PORT}"
+      - "${MYSQL_PORT}:${MYSQL_PORT}"
   redis:
     image: daocloud.io/library/redis:4.0.10-alpine
     restart: always
@@ -92,3 +92,12 @@ services:
     restart: always
     ports:
       - "${MEMCACHED_PORT}:${MEMCACHED_PORT}"
+  frps:
+    image: snowdreamtech/frps
+    restart: always
+    container_name: ds-frps
+    volumes:
+      - /etc/localtime:/etc/localtime
+      - ./frps/frps.ini:/etc/frp/frps.ini
+    ports:
+      - "7000:7000"      
