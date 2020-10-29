@@ -5,6 +5,8 @@ services:
     restart: always
     container_name: ds-trojan
     #network_mode: host
+    labels:
+      - com.centurylinklabs.watchtower.enable=true
     volumes:
       - /etc/localtime:/etc/localtime
       - ./trojan:/config
@@ -15,6 +17,8 @@ services:
     image: adolfintel/speedtest
     restart: always
     container_name: ds-speedtest
+    labels:
+      - com.centurylinklabs.watchtower.enable=true
     environment:
       - MODE=standalone
     volumes:
@@ -26,7 +30,9 @@ services:
     restart: always
     container_name: ds-caddy
     working_dir: /var/www/html
-    network_mode: host
+    #network_mode: host
+    labels:
+      - com.centurylinklabs.watchtower.enable=true
     volumes:
       - /etc/localtime:/etc/localtime
       - ./wwwroot:/var/www/html
@@ -36,3 +42,15 @@ services:
     ports:
       - "80:80"
       - "8443:8443"
+  watchtower:
+    image: containrrr/watchtower
+    container_name: watchtower
+    restart: always
+    labels:
+      - com.centurylinklabs.watchtower.enable=true
+    environment:
+      - TZ=Asia/Shanghai
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: --cleanup --label-enable --schedule "0 0 3 ? * MON"
+  
